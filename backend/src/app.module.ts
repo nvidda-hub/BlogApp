@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {dataSourceOptions} from 'database/data-source';
+import { UserModule } from './user/user.module';
 
 const ENV = process.env.NODE_ENV
-
-console.log("ENV : ", ENV)
 
 @Module({
   imports: [
@@ -21,9 +18,10 @@ console.log("ENV : ", ENV)
       imports : [ConfigModule],
       useFactory : (configService : ConfigService) => dataSourceOptions,
       inject : [ConfigService]
-    })
+    }),
+    UserModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

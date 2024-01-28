@@ -3,7 +3,7 @@ import { DataSource, DataSourceOptions } from "typeorm";
 
 const ENV = process.env.NODE_ENV;
 
-configDotenv({path : `.env.${ENV}`})
+configDotenv({path : !ENV ? '.env' : `.env.${ENV}`})
 
 export const dataSourceOptions : DataSourceOptions = {
     type : 'postgres',
@@ -16,7 +16,6 @@ export const dataSourceOptions : DataSourceOptions = {
     migrations : ['dist/database/migrations/**/*.js']
 }
 
-console.log("dataSourceOptions L ", dataSourceOptions)
 
 const dataSoruce = new DataSource(dataSourceOptions)
 dataSoruce
