@@ -7,7 +7,7 @@ import { UserRepository } from "../repositories/user.repository";
 import * as bcrypt from "bcrypt"
 import { UserModuleConstants } from "../constants";
 import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
-import { HttpException, HttpStatus } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus } from "@nestjs/common";
 import { capitilizeString } from "src/common/helper";
 
 export class UserService implements IUserService {
@@ -24,10 +24,7 @@ export class UserService implements IUserService {
             return true
         } catch(err) {
             console.log(`User creation failed | Reason : ${JSON.stringify(err.message)}`)
-            throw new HttpException({
-                status : HttpStatus.BAD_REQUEST,
-                error : err.message
-            }, HttpStatus.BAD_REQUEST, {cause : err})
+            throw new BadRequestException(err.message)
         }
     }
     async updateUser(id : string, user: UpdateUserDto): Promise<boolean> {

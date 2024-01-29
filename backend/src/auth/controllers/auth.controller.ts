@@ -19,8 +19,9 @@ export class AuthController {
         private readonly userService : IUserService,
     ){}
 
-    @Post()
+    @Post('sign-up')
     async signUp(@Body() user : CreateUserDto) {
+        console.log("user : ", user)
         return await this.userService.createUser(user)
     }
 

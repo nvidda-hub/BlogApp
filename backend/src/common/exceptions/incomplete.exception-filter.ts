@@ -8,7 +8,8 @@ export class IncompleteDataExceptionFilter implements ExceptionFilter {
             error : "Incomplete data",
             name : exception.name,
             code : 400,
-            uiMessage : "Please fill all the required fields."
+            uiMessage : "Please fill all the required fields.",
+            success : false
         }
         const ctx = host.switchToHttp()
         const response = ctx.getResponse()

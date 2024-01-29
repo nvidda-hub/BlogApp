@@ -26,6 +26,7 @@ export class ResponseLoggerInterceptor implements NestInterceptor {
         const response = context.switchToHttp().getResponse()
       return next.handle().pipe(map(data => ({
         status : response.statusCode,
+        success : true,
         data : data
       })))
     }
