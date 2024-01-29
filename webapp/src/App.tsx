@@ -6,12 +6,15 @@ import SignInPage from "./pages/SignIn.page"
 import SignUpPage from "./pages/SignUp.page"
 import ProjectsPage from "./pages/Projects.page"
 import Header from "./components/Header.component"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
+      <ToastContainer />
         <Header />
         <Routes>
           <Route path='/' element={<HomePage />}/>
