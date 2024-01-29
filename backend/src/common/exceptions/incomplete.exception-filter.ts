@@ -5,10 +5,9 @@ export class IncompleteDataExceptionFilter implements ExceptionFilter {
     catch(exception: IncompleteDataException, host: ArgumentsHost) {
         const messageBody = {
             message : exception.message,
-            error : "Incomplete data",
+            error : exception.message,
             name : exception.name,
             code : 400,
-            uiMessage : "Please fill all the required fields.",
             success : false
         }
         const ctx = host.switchToHttp()

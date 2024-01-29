@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Patch, Post, Query, UseFilters, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Patch, Post, Query, UseFilters, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthModuleConstants } from "../constants";
 import { IAuthService, SignInPayload } from "../interfaces/auth.interface";
 import { RequestLoggerInterceptor, ResponseLoggerInterceptor } from "src/common/interceptors/req-res.interceptor";
@@ -6,6 +6,7 @@ import { CreateUserDto } from "src/user/dto/create-user.dto";
 import { UserModuleConstants } from "src/user/constants";
 import { IUserService } from "src/user/interfaces/user.interface";
 import { IncompleteDataExceptionFilter } from "src/common/exceptions/incomplete.exception-filter";
+import { JWTAuthGuard } from "src/common/guards/jwt-auth.guard";
 
 @UseInterceptors(ResponseLoggerInterceptor, RequestLoggerInterceptor)
 @UseFilters(IncompleteDataExceptionFilter)
@@ -21,7 +22,6 @@ export class AuthController {
 
     @Post('sign-up')
     async signUp(@Body() user : CreateUserDto) {
-        console.log("user : ", user)
         return await this.userService.createUser(user)
     }
 

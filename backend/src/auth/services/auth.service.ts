@@ -1,27 +1,35 @@
-import { plainToInstance } from "class-transformer";
 import * as bcrypt from "bcrypt"
-import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
-import { BadRequestException, HttpException, HttpStatus } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { IAuthService, SignInPayload } from "../interfaces/auth.interface";
-import { CreateUserDto } from "src/user/dto/create-user.dto";
 import { UserRepository } from "src/user/repositories/user.repository";
+import { JwtService } from "@nestjs/jwt";
 
+@Injectable()
 export class AuthService implements IAuthService {    
-    async signin(signInPayload: SignInPayload): Promise<boolean> {
+    constructor(
+        private readonly jwtService : JwtService
+    ){}
+    async signin(signInPayload: SignInPayload): Promise<boolean | Object> {
         try {
             const user = await UserRepository.findOne({where : {username : signInPayload.username}})
             if(user){
                 const isPasswordMatch = await bcrypt.compare(signInPayload.password, user.password)
                 if(isPasswordMatch){
-                    console.log("User authorized!!")
-                    return true
+                    const token = await this.jwtService.signAsync({id : user.id, username : user.username})
+                    return {
+                        "access_token":token,
+                        user : user
+                    }
+                } else {
+                    throw new UnauthorizedException()
                 }
+            } else {
+                throw new NotFoundException("User not found")
             }
         } catch(err) {
             console.error(`User authentication failed | Reason : ${JSON.stringify(err.message)} `)
             throw new BadRequestException(err.message)
             
         }
-        return false   
     }
 }

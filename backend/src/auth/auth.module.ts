@@ -3,6 +3,7 @@ import { UserModule } from "src/user/user.module";
 import { AuthModuleConstants } from "./constants";
 import { AuthService } from "./services/auth.service";
 import { AuthController } from "./controllers/auth.controller";
+import { JwtModule } from "@nestjs/jwt";
 
 const AuthServiceProvider : Provider = {
     provide : AuthModuleConstants.AUTH_SERVICE,
@@ -10,7 +11,9 @@ const AuthServiceProvider : Provider = {
 }
 
 @Module({
-    imports : [UserModule],
+    imports : [
+        UserModule,
+    ],
     providers : [AuthServiceProvider],
     controllers : [AuthController]
 })

@@ -7,5 +7,5 @@ export interface SignInPayload {
 
 export interface IAuthService {
     // signUp(user : CreateUserDto) : Promise<boolean>,
-    signin(singInPayload : SignInPayload) : Promise<boolean>,
+    signin(singInPayload : SignInPayload) : Promise<boolean | Object>,
 }
