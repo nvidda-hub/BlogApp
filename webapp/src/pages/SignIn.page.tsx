@@ -1,7 +1,10 @@
 import axios from "axios"
-import { FormEvent, useState } from "react"
-import { Link } from "react-router-dom"
+import { FormEvent, useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
 import { Bounce, toast } from "react-toastify"
+import { login } from "../redux-work/slices/user.slice"
+import { RootState } from "../redux-work/reducers"
 
 interface SignInFormDataInterface {
   username : string,
@@ -10,6 +13,9 @@ interface SignInFormDataInterface {
 
 const SignInPage = () => {
   const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const userData = useSelector((state : RootState)  => state.user)
   const [signInFormData, setSignInFormData] = useState<SignInFormDataInterface>({
     username : "",
     password : ""
@@ -23,6 +29,7 @@ const SignInPage = () => {
     try {
       const res = await axios.post('/v1/api/auth/sign-in', signInFormData)
       if(res.data.success){
+        dispatch(login({accessToken : res.data.data.access_token, ...res.data.data.user}))
         toast.success(`Log in success!!`, {
           position: "top-right",
           autoClose: 5000,
@@ -34,6 +41,7 @@ const SignInPage = () => {
           theme: "light",
           transition: Bounce,
           });
+          navigate('/')
       } else {
         toast.error(`Sign in failed`, {
           position: "top-right",
@@ -63,6 +71,9 @@ const SignInPage = () => {
     }
     setLoading(false)
   }
+  useEffect(() => {
+    console.log("userData : ", userData)
+  }, [userData])
   return (
     <div className="mx-auto p-3 max-w-lg space-y-4">
       <div className="text-3xl font-semibold text-center py-7">
