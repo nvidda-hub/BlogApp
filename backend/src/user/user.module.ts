@@ -10,6 +10,7 @@ const UserServiceProvider : Provider = {
 
 @Module({
     providers : [UserServiceProvider],
-    controllers : [UserController]
+    controllers : [UserController],
+    exports : [UserServiceProvider]
 })
 export class UserModule {}

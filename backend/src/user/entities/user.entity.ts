@@ -20,6 +20,6 @@ export class UserEntity extends AbstractEntity {
     @Column({name : 'last_name'})
     lastName : string
 
-    @Column({select : false})
+    @Column()
     password : string
 }
