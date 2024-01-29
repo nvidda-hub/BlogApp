@@ -74,7 +74,6 @@ const SignUpPage = () => {
         theme: "light",
         transition: Bounce,
         });
-        console.log("error :", errorMessage)
     }
     setLoading(false)
 
@@ -92,7 +91,7 @@ const SignUpPage = () => {
         <input type="text" placeholder="lastname" id="lastName" className="border border-gray-300 p-3 rounded-lg w-full" onChange={handleChange} value={signUpFromData.lastName} />
         <input type="email" placeholder="email" id="email" className="border border-gray-300 p-3 rounded-lg w-full" onChange={handleChange}  value={signUpFromData.email}/>
         <input type="password" placeholder="password" id="password" className="border border-gray-300 p-3 rounded-lg w-full" onChange={handleChange}  value={signUpFromData.password}/>
-        <button className="p-3 bg-gray-800 text-white rounded-lg uppercase w-4/5 hover:opacity-90 disabled:bg-slate-300 disabled:cursor-not-allowed" type="submit" disabled={loading}>{loading ? 'Loading ...' : 'Sign Up'}</button>
+        <button className="p-3 bg-gray-800 text-white rounded-lg uppercase w-4/5 hover:opacity-90 disabled:bg-slate-300 disabled:cursor-not-allowed" type="submit" disabled={loading || Object.values(signUpFromData).some(item => item === '')}>{loading ? 'Loading ...' : 'Sign Up'}</button>
       </form>
       <div className="flex flex-row space-x-2">
         <div className="font-semibold">Have an account?</div>
