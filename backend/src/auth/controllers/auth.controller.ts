@@ -1,12 +1,14 @@
-import { Body, Controller, Get, Inject, Param, Patch, Post, Query, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Patch, Post, Query, UseFilters, UseInterceptors } from "@nestjs/common";
 import { AuthModuleConstants } from "../constants";
 import { IAuthService, SignInPayload } from "../interfaces/auth.interface";
 import { RequestLoggerInterceptor, ResponseLoggerInterceptor } from "src/common/interceptors/req-res.interceptor";
 import { CreateUserDto } from "src/user/dto/create-user.dto";
 import { UserModuleConstants } from "src/user/constants";
 import { IUserService } from "src/user/interfaces/user.interface";
+import { IncompleteDataExceptionFilter } from "src/common/exceptions/incomplete.exception-filter";
 
 @UseInterceptors(ResponseLoggerInterceptor, RequestLoggerInterceptor)
+@UseFilters(IncompleteDataExceptionFilter)
 @Controller('auth')
 export class AuthController {
     constructor(

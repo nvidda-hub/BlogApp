@@ -50,7 +50,7 @@ export class UserService implements IUserService {
 
             }
             return user
-        } catch {
+        } catch(error) {
             
         }
     }
