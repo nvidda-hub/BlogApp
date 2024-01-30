@@ -2,93 +2,40 @@ version: '3.8'
 
 services:
   postgres:
-    container_name: blog-app-db-server
-    image: postgres:15
+    container_name: my_postgres_container
+    image: postgres:latest
     ports:
       - "5432:5432"
-    volumes:
-      - postgres-data:/data/postgres
-      - postgres-dbdata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER : postgres
-      - POSTGRES_PASSWORD : narendra
-      - POSTGRES_DB : BlogApp
-      - PGADMIN_DEFAULT_EMAIL : nvidda257605@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD : password
-    networks:
-      - postgres
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
-  pgadmin:
-    container_name: blog-app-backend-pgadmin
-    image: dpage/pgadmin4
-    ports:
-      - "9090:80"
-    volumes:
-      - pgadmin-data:/root/.pgadmin
-      - pgadmin-libdata:/var/lib/pgadmin
-    networks:
-      - postgres
-    environment:
-      - PGADMIN_DEFAULT_EMAIL : nvidda257605@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD : password
-    links:
-      - postgres:postgres
- 
   server:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    environment:
-      - POSTGRES_USER : postgres
-      - POSTGRES_PASSWORD : narendra
-      - POSTGRES_DB : BlogApp
-      - POSTGRES_HOST : localhost
-      - PGADMIN_DEFAULT_EMAIL : nvidda257605@gmail.com
-      - PGADMIN_DEFAULT_PASSWORD : narendra
     ports:
-      - '3000:3000'
+      - "3000:3000"
     depends_on:
       - postgres
-
-    develop:
-      watch:
-        - path : ./backend/package.json
-          action : rebuild
-        - path  : ./backend/package.lock.json
-          action : rebuild
-        - path : ./backend
-          target : /app
-          action : sync
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
 
   web:
-    depends_on:
-      - server
     build: ./webapp
     ports:
-      - 5173:5173
+      - "5173:5173"
     # environment:
-    #   VITE_API_URL=http://localhost:3000
-    develop:
-      watch:
-        - path : ./webapp/package.json
-          action : rebuild
-        - path  : ./webapp/package.lock.json
-          action : rebuild
-        - path : ./webapp
-          target : /app
-          action : sync
-
+    #   VITE_API_URL: "http://server:3000"  # Use the service name of the backend service
+    depends_on:
+      - server
 
 volumes:
-  postgres-data:
-    driver: local
-  postgres-dbdata:
-    driver: local
-  pgadmin-data:
-    driver: local
-  pgadmin-libdata:
-    driver: local
-
-networks:
-  postgres:
-    driver: bridge
+  postgres_data:
