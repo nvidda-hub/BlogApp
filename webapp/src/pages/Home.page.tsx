@@ -11,6 +11,7 @@ const HomePage = () => {
       <div className="text-xl font-bold">Dashbaord</div>
       <div className="text-xl font-bold">Section 1</div>
       <div className="text-xl font-bold">Section 2</div>
+      <div className="text-xl font-bold">Section 3</div>
     </div>
   )
 }
