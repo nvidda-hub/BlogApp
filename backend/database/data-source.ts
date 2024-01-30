@@ -16,7 +16,6 @@ export const dataSourceOptions : DataSourceOptions = {
     migrations : ['dist/database/migrations/**/*.js']
 }
 
-
 const dataSoruce = new DataSource(dataSourceOptions)
 dataSoruce
 .initialize()
@@ -24,7 +23,7 @@ dataSoruce
     console.log("Db connection is succesful")
 })
 .catch(err => {
-    console.log(`Connection failed | Reason : ${JSON.stringify(err)}`)
+    console.log(`Connection failed | Reason : ${JSON.stringify(dataSourceOptions)}`)
 })
 
 export default dataSoruce;
