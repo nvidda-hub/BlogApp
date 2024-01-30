@@ -1,26 +1,28 @@
+# Project Docker Configuration - README
 
-Project Docker Configuration - README
-Table of Contents
-Introduction
-Getting Started
-Project Structure
-Environment Variables
-Development Workflow
-Introduction
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Getting Started](#getting-started)
+3. [Project Structure](#project-structure)
+4. [Environment Variables](#environment-variables)
+5. [Development Workflow](#development-workflow)
+
+## Introduction
+
 Welcome to the Docker configuration for the "Blog App" project. This setup includes services for PostgreSQL, NestJS backend, and ViteJS frontend. The Docker Compose file is designed to streamline development and deployment processes.
 
-Getting Started
-Prerequisites:
+## Getting Started
 
-Docker and Docker Compose installed on your machine.
-Clone the Repository:
+1. **Prerequisites:**
+   - Docker and Docker Compose installed on your machine.
 
-bash
-Copy code
-git clone <repository-url>
-cd <project-directory>
+2. **Clone the Repository:**
+   ```bash
+   git clone <repository-url>
+   cd <project-directory>
+
 Environment Variables:
-
 Set your environment variables by creating a .env file in the root of the backend directory. Include the necessary database configuration variables:
 env
 Copy code
@@ -87,3 +89,4 @@ Automatic rebuilding on changes:
 bash
 Copy code
 docker-compose exec web npm run develop
+This README provides a basic overview. It's essential to adapt

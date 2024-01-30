@@ -1,7 +1,5 @@
 FROM node:20-alpine
 
-LABEL author="Narendra Vidda"
-
 WORKDIR /app
 
 COPY package*.json ./

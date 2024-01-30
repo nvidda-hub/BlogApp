@@ -2,7 +2,6 @@ import { configDotenv } from "dotenv";
 import { DataSource, DataSourceOptions } from "typeorm";
 
 const ENV = process.env.NODE_ENV;
-
 configDotenv({path : !ENV ? '.env' : `.env.${ENV}`})
 
 export const dataSourceOptions : DataSourceOptions = {
@@ -23,7 +22,7 @@ dataSoruce
     console.log("Db connection is succesful")
 })
 .catch(err => {
-    console.log(`Connection failed | Reason : ${JSON.stringify(dataSourceOptions)}`)
+    console.log(`Connection failed | Reason : ${JSON.stringify(err)} with dataSourceOptions : ${JSON.stringify(dataSourceOptions)}`)
 })
 
 export default dataSoruce;

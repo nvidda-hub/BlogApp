@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_PASSWORD: narendra
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -22,7 +22,7 @@ services:
     depends_on:
       - postgres
     environment:
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: ${DB_HOST_NAME}
       POSTGRES_PORT: ${DB_PORT}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -32,8 +32,8 @@ services:
     build: ./webapp
     ports:
       - "5173:5173"
-    # environment:
-    #   VITE_API_URL: "http://server:3000"  # Use the service name of the backend service
+    environment:
+      VITE_API_URL: "http://localhost:3000"  # Use the service name of the backend service
     depends_on:
       - server
 
