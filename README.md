@@ -22,10 +22,9 @@ Welcome to the Docker configuration for the "Blog App" project. This setup inclu
    git clone <repository-url>
    cd <project-directory>
 
-Environment Variables:
+## Environment Variables:
 Set your environment variables by creating a .env file in the root of the backend directory. Include the necessary database configuration variables:
-env
-Copy code
+```bash
 DB_NAME=BlogApp
 DB_USERNAME=postgres
 DB_PASSWORD=narendra
